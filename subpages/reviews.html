@@ -4,30 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Multiverse Hub - Reviews</title>
+  
+  <link rel="stylesheet" href="../style.css">
+  
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #fff;
-      background: radial-gradient(ellipse at bottom, #050505 0%, #000 100%);
-      /* Remove overflow hidden to allow scrolling */
-      /* overflow: hidden; */
-    }
-
-    canvas#starfield {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      /* Make sure it can grow beyond viewport */
-      min-height: 100vh;
-      z-index: -1;
-      pointer-events: none;
-    }
 
     header {
       background: linear-gradient(90deg, #00ffcc, #00ccff);
@@ -239,6 +219,7 @@
       </ul>
       <input type="text" placeholder="Search..." class="search-bar">
     </div>
+    <button id="starModeToggle" class="toggle-btn">Switch Starfield Mode</button>
   </nav>
 
   <section class="hero">
