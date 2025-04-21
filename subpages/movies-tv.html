@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Multiverse Hub - Movies & TV</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      background: radial-gradient(ellipse at bottom, #050505 0%, #000 100%);
+    }
+
+    canvas#starfield {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    header {
+      background: linear-gradient(90deg, #00ffcc, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      padding: 0px 10px 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ffcc; }
+      to { text-shadow: 0 0 20px #00ccff, 0 0 30px #00ccff; }
+    }
+
+    .navbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 25px;
+      flex-wrap: wrap;
+      background: transparent;
+      position: relative;
+      z-index: 1;
+    }
+
+    .navbar h1 {
+      color: #00ffff;
+      font-size: 1.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links li a {
+      display: inline-block;
+      padding: 5px 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff;
+      border-radius: 25px;
+      color: #00ffff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px #00ffff;
+      box-shadow: 0 0 5px #00ffff30, 0 0 10px #00ffff10;
+    }
+
+    .nav-links li a:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px #00ffff80, 0 0 20px #00ffff40;
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    .search-bar {
+      padding: 8px 12px;
+      height: 35px;
+      border-radius: 20px;
+      border: 2px solid #00ffff;
+      outline: none;
+      background-color: rgba(34, 34, 34, 0.8);
+      color: #fff;
+      max-width: 1000px;
+      width: 100%;
+      box-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff40;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-bar:focus {
+      box-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff80;
+    }
+
+    .hero {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      color: #00ffff;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #ccc;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin-top: 15px;
+      color: #ff00cc;
+    }
+
+    .card p {
+      margin-top: 10px;
+      color: #ccc;
+    }
+
+    .show-list {
+      margin-top: 20px;
+    }
+
+    .show-item {
+      display: flex;
+      margin-bottom: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .show-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .show-image {
+      width: 180px;
+      height: 120px;
+      object-fit: cover;
+    }
+
+    .show-details {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .show-title {
+      color: #00ffff;
+      margin-bottom: 5px;
+      font-size: 1.3rem;
+    }
+
+    .show-info {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .show-description {
+      margin-top: 8px;
+      color: #aaa;
+    }
+
+    .rating {
+      display: flex;
+      margin-top: 10px;
+      color: #ffcc00;
+    }
+
+    /* Tabs for Movies & TV Shows */
+    .tab-container {
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff;
+      border-radius: 25px;
+      color: #00ffff;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0 10px;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px #00ffff80, 0 0 20px #00ffff40;
+      color: #fff;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Trailer section */
+    .trailer-section {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      padding: 30px;
+      margin: 40px 20px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+    }
+    
+    .trailer-section h2 {
+      color: #00ffff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .trailer-container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      height: 450px;
+      background: #000;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+    
+    .trailer-placeholder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+    
+    .trailer-placeholder i {
+      font-size: 60px;
+      color: #00ffff;
+      margin-bottom: 15px;
+    }
+    
+    .trailer-placeholder p {
+      color: #00ffff;
+      font-size: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+      font-size: 0.9rem;
+      text-shadow: 0 0 10px #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+  
+  <header><h1>The Multiverse Hub</h1></header>
+      
+  <nav class="navbar">
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="movies-tv.html">Movies & TV</a></li>
+        <li><a href="guides.html">Guides</a></li>
+        <li><a href="platforms.html">Platforms</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <input type="text" placeholder="Search..." class="search-bar">
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h2>Movies & TV</h2>
+    <p>Explore the latest adaptations and original content from gaming universes</p>
+  </section>
+
+  <main class="content">
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Featured Movie">
+      <h3>Featured Film</h3>
+      <p>The much-anticipated movie adaptation that brings your favorite gaming franchise to the big screen.</p>
+    </section>
+
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Featured Series">
+      <h3>Trending Series</h3>
+      <p>This groundbreaking show is redefining how video game stories are adapted for television.</p>
+    </section>
+
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Coming Soon">
+      <h3>Coming Soon</h3>
+      <p>Get an exclusive first look at the next big streaming sensation based on a cult classic RPG.</p>
+    </section>
+  </main>
+  
+  <div class="trailer-section">
+    <h2>Featured Trailer</h2>
+    <div class="trailer-container">
+      <div class="trailer-placeholder">
+        <i>▶</i>
+        <p>Cosmic Legends: The Movie - Official Trailer</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-container">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="openTab('movies')">Movies</button>
+      <button class="tab-btn" onclick="openTab('tv')">TV Shows</button>
+      <button class="tab-btn" onclick="openTab('upcoming')">Upcoming</button>
+    </div>
+  
+    <div id="movies" class="tab-content active">
+      <div class="show-list">
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="Movie 1" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Galactic Horizons</h3>
+            <div class="show-info">Sci-Fi Adventure | Release: February 2025</div>
+            <p class="show-description">Based on the hit game series, this epic adventure follows a band of interstellar explorers as they discover a mysterious artifact that threatens the fabric of reality.</p>
+            <div class="rating">★★★★☆</div>
+          </div>
+        </div>
+        
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="Movie 2" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Shadow Protocol</h3>
+            <div class="show-info">Action Thriller | Release: January 2025</div>
+            <p class="show-description">When a covert operative discovers a conspiracy within her own agency, she must use her unique skills to expose the truth before time runs out.</p>
+            <div class="rating">★★★★★</div>
+          </div>
+        </div>
+        
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="Movie 3" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Ethereal Kingdoms</h3>
+            <div class="show-info">Fantasy | Release: March 2025</div>
+            <p class="show-description">The beloved fantasy RPG comes to life in this visually stunning adaptation featuring state-of-the-art special effects and an all-star cast.</p>
+            <div class="rating">★★★★☆</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div id="tv" class="tab-content">
+      <div class="show-list">
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="TV Show 1" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Neon Nights</h3>
+            <div class="show-info">Cyberpunk Drama | Season 2 | Streaming Now</div>
+            <p class="show-description">Set in a dystopian future, this critically acclaimed series follows hackers and rebels fighting against corporate tyranny in a neon-soaked metropolis.</p>
+            <div class="rating">★★★★★</div>
+          </div>
+        </div>
+        
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="TV Show 2" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Elemental Legends</h3>
+            <div class="show-info">Fantasy Adventure | Season 1 | Streaming Now</div>
+            <p class="show-description">Four heroes with elemental powers must unite to save their world from an ancient evil that threatens to consume everything in darkness.</p>
+            <div class="rating">★★★★☆</div>
+          </div>
+        </div>
+        
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="TV Show 3" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Quantum Break</h3>
+            <div class="show-info">Sci-Fi Thriller | Season 3 | Streaming Now</div>
+            <p class="show-description">Time is broken and only one scientist holds the key to fixing it. With reality fracturing around them, can they restore the timeline before it's too late?</p>
+            <div class="rating">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div id="upcoming" class="tab-content">
+      <div class="show-list">
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="Upcoming 1" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Dark Horizon</h3>
+            <div class="show-info">Horror Series | Coming May 2025</div>
+            <p class="show-description">Based on the terrifying survival horror game, this series promises to bring the nightmare to life with practical effects and psychological terror.</p>
+            <div class="rating">Anticipated Rating: ★★★★★</div>
+          </div>
+        </div>
+        
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="Upcoming 2" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Velocity Rush: The Movie</h3>
+            <div class="show-info">Action | Coming June 2025</div>
+            <p class="show-description">The adrenaline-fueled racing series gets a big-screen treatment with practical stunts and minimal CGI for maximum thrills.</p>
+            <div class="rating">Anticipated Rating: ★★★★☆</div>
+          </div>
+        </div>
+        
+        <div class="show-item">
+          <img src="https://via.placeholder.com/180x120" alt="Upcoming 3" class="show-image">
+          <div class="show-details">
+            <h3 class="show-title">Legacy of Heroes</h3>
+            <div class="show-info">Animated Series | Coming April 2025</div>
+            <p class="show-description">This animated adaptation brings the beloved MMORPG to life with stunning visuals and faithful storytelling that fans will appreciate.</p>
+            <div class="rating">Anticipated Rating: ★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../starfield.js"></script>
+
+  <footer>
+    <p>&copy; 2025 The Multiverse Hub. All rights reserved.</p>
+  </footer>
+</body>
+</html>

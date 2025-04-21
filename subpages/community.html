@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Multiverse Hub - Community</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      background: radial-gradient(ellipse at bottom, #050505 0%, #000 100%);
+      /* Remove overflow hidden to allow scrolling */
+      /* overflow: hidden; */
+    }
+
+    canvas#starfield {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      /* Make sure it can grow beyond viewport */
+      min-height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    header {
+      background: linear-gradient(90deg, #00ffcc, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      padding: 0px 10px 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ffcc; }
+      to { text-shadow: 0 0 20px #00ccff, 0 0 30px #00ccff; }
+    }
+
+    .navbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 25px;
+      flex-wrap: wrap;
+      background: transparent; /* Make it transparent */
+      position: relative;
+      z-index: 1; /* Make sure it's above the canvas */
+    }
+
+    .navbar h1 {
+      color: #00ffff;
+      font-size: 1.8rem;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      list-style: none; /* Remove bullets */
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links li {
+      /* No special styles needed unless spacing is desired */
+    }
+
+    .nav-links li a {
+      display: inline-block;
+      padding: 5px 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff;
+      border-radius: 25px;
+      color: #00ffff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px #00ffff;
+      box-shadow: 0 0 5px #00ffff30, 0 0 10px #00ffff10;
+    }
+
+    .nav-links li a:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px #00ffff80, 0 0 20px #00ffff40;
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    .search-bar {
+      padding: 8px 12px;
+      height: 35px;
+      border-radius: 20px;
+      border: 2px solid #00ffff;
+      outline: none;
+      background-color: rgba(34, 34, 34, 0.8);
+      color: #fff;
+      max-width: 1000px;
+      width: 100%;
+      box-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff40;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-bar:focus {
+      box-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff80;
+    }
+
+    .hero {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      color: #00ffff;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #ccc;
+    }
+
+    .content {
+      padding: 40px 20px;
+    }
+
+    .community-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .forum-section {
+      grid-column: 1 / -1;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      margin-bottom: 30px;
+    }
+
+    .forum-section h3 {
+      color: #ff00cc;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 0, 204, 0.3);
+      padding-bottom: 10px;
+    }
+
+    .forum-topics {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .topic {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border-left: 4px solid #00ffff;
+      transition: all 0.3s ease;
+    }
+
+    .topic:hover {
+      background: rgba(0, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+
+    .topic-info {
+      flex: 1;
+    }
+
+    .topic-title {
+      color: #00ffff;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .topic-meta {
+      display: flex;
+      gap: 15px;
+      color: #999;
+      font-size: 0.85rem;
+    }
+
+    .topic-stats {
+      display: flex;
+      gap: 20px;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin-top: 15px;
+      color: #ff00cc;
+    }
+
+    .card p {
+      margin-top: 10px;
+      color: #ccc;
+      flex: 1;
+    }
+
+    .card-button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 8px 15px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff;
+      border-radius: 20px;
+      color: #00ffff;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .card-button:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px #00ffff80;
+    }
+
+    .members-online {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      grid-column: 1 / -1;
+      margin-top: 30px;
+    }
+
+    .members-online h3 {
+      color: #ff00cc;
+      margin-bottom: 15px;
+    }
+
+    .online-count {
+      color: #00ffff;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .avatar-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.2);
+      border: 2px solid #00ffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <header><h1>The Multiverse Hub</h1></header>
+  <canvas id="starfield"></canvas>
+      
+  <nav class="navbar">
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gaming.html">Games</a></li>
+        <li><a href="movies-tv.html">Movies & TV</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="guides.html">Guides</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="news.html">News</a></li>
+      </ul>
+      <input type="text" placeholder="Search..." class="search-bar">
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h2>Community Hub</h2>
+    <p>Connect with fellow gamers, movie enthusiasts, and tech lovers across the multiverse</p>
+  </section>
+
+  <main class="content">
+    <section class="forum-section">
+      <h3>Popular Discussions</h3>
+      <div class="forum-topics">
+        <div class="topic">
+          <div class="topic-info">
+            <div class="topic-title">Best open-world space games of 2025 so far</div>
+            <div class="topic-meta">
+              <span>By: CosmicExplorer</span>
+              <span>Started: April 12, 2025</span>
+            </div>
+          </div>
+          <div class="topic-stats">
+            <span>42 Replies</span>
+            <span>187 Views</span>
+          </div>
+        </div>
+
+        <div class="topic">
+          <div class="topic-info">
+            <div class="topic-title">Upcoming sci-fi movies everyone should watch</div>
+            <div class="topic-meta">
+              <span>By: FilmVoyager</span>
+              <span>Started: April 15, 2025</span>
+            </div>
+          </div>
+          <div class="topic-stats">
+            <span>28 Replies</span>
+            <span>145 Views</span>
+          </div>
+        </div>
+
+        <div class="topic">
+          <div class="topic-info">
+            <div class="topic-title">VR technology: Where are we heading?</div>
+            <div class="topic-meta">
+              <span>By: TechWanderer</span>
+              <span>Started: April 10, 2025</span>
+            </div>
+          </div>
+          <div class="topic-stats">
+            <span>53 Replies</span>
+            <span>231 Views</span>
+          </div>
+        </div>
+
+        <div class="topic">
+          <div class="topic-info">
+            <div class="topic-title">Hidden indie games you need to try</div>
+            <div class="topic-meta">
+              <span>By: GameSeeker</span>
+              <span>Started: April 16, 2025</span>
+            </div>
+          </div>
+          <div class="topic-stats">
+            <span>19 Replies</span>
+            <span>98 Views</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="community-grid">
+      <section class="card">
+        <img src="https://via.placeholder.com/300x200" alt="Events">
+        <h3>Community Events</h3>
+        <p>Join our weekly game nights, movie watch parties, and virtual meetups. Connect with like-minded enthusiasts and make new friends across the multiverse.</p>
+        <a href="#" class="card-button">View Calendar</a>
+      </section>
+
+      <section class="card">
+        <img src="https://via.placeholder.com/300x200" alt="Discord">
+        <h3>Join Our Discord</h3>
+        <p>Real-time discussions, voice chats, and dedicated channels for every topic. Our Discord server is the perfect place to find gaming partners and chat about your favorite entertainment.</p>
+        <a href="#" class="card-button">Connect Now</a>
+      </section>
+
+      <section class="card">
+        <img src="https://via.placeholder.com/300x200" alt="Competitions">
+        <h3>Tournaments & Contests</h3>
+        <p>Test your skills in our regular gaming tournaments or show your creativity in our fan art competitions. Great prizes await the winners!</p>
+        <a href="#" class="card-button">Participate</a>
+      </section>
+    </div>
+
+    <section class="members-online">
+      <h3>Community Pulse</h3>
+      <div class="online-count">423 Members Online Now</div>
+      <p style="margin-bottom: 15px;">See who's exploring The Multiverse Hub right now:</p>
+      <div class="avatar-group">
+        <div class="avatar">CE</div>
+        <div class="avatar">TV</div>
+        <div class="avatar">GS</div>
+        <div class="avatar">FV</div>
+        <div class="avatar">TW</div>
+        <div class="avatar">SN</div>
+        <div class="avatar">MX</div>
+        <div class="avatar">RQ</div>
+        <div class="avatar">KL</div>
+        <div class="avatar">ZY</div>
+        <div class="avatar">+413</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../starfield.js"></script>
+  
+  <footer style="text-align: center; padding: 40px 20px; color: #999; font-size: 0.9rem;">
+    <p style="text-shadow: 0 0 10px #00ffff;">&copy; 2025 The Multiverse Hub. All rights reserved.</p>
+  </footer>
+</body>
+</html>

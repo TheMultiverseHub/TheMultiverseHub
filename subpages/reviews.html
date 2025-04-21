@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Multiverse Hub - Reviews</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      background: radial-gradient(ellipse at bottom, #050505 0%, #000 100%);
+      /* Remove overflow hidden to allow scrolling */
+      /* overflow: hidden; */
+    }
+
+    canvas#starfield {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      /* Make sure it can grow beyond viewport */
+      min-height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    header {
+      background: linear-gradient(90deg, #00ffcc, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+      padding: 0px 10px 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ffcc; }
+      to { text-shadow: 0 0 20px #00ccff, 0 0 30px #00ccff; }
+    }
+
+    .navbar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 25px;
+      flex-wrap: wrap;
+      background: transparent; /* Make it transparent */
+      position: relative;
+      z-index: 1; /* Make sure it's above the canvas */
+    }
+
+    .navbar h1 {
+      color: #00ffff;
+      font-size: 1.8rem;
+    }
+
+    .nav-links li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      list-style: none; /* Remove bullets */
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-links li {
+      /* No special styles needed unless spacing is desired */
+    }
+
+    .nav-links li a {
+      display: inline-block;
+      padding: 5px 10px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff;
+      border-radius: 25px;
+      color: #00ffff;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      text-shadow: 0 0 5px #00ffff;
+      box-shadow: 0 0 5px #00ffff30, 0 0 10px #00ffff10;
+    }
+
+    .nav-links li a:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px #00ffff80, 0 0 20px #00ffff40;
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    .search-bar {
+      padding: 8px 12px;
+      height: 35px;
+      border-radius: 20px;
+      border: 2px solid #00ffff;
+      outline: none;
+      background-color: rgba(34, 34, 34, 0.8);
+      color: #fff;
+      max-width: 1000px;
+      width: 100%;
+      box-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff40;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-bar:focus {
+      box-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff80;
+    }
+
+    .hero {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      color: #00ffff;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #ccc;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin-top: 15px;
+      color: #ff00cc;
+    }
+
+    .card p {
+      margin-top: 10px;
+      color: #ccc;
+    }
+
+    .rating {
+      display: flex;
+      margin-top: 10px;
+      color: #00ffff;
+    }
+
+    .rating span {
+      margin-right: 5px;
+    }
+
+    .review-details {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 15px;
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid #00ffff;
+      border-radius: 20px;
+      color: #00ffff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      background: rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 10px #00ffff80;
+    }
+
+    .filter-btn.active {
+      background: rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 15px #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <header><h1>The Multiverse Hub</h1></header>
+  <canvas id="starfield"></canvas>
+      
+  <nav class="navbar">
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="movies-tv.html">Movies & TV</a></li>
+        <li><a href="guides.html">Guides</a></li>
+        <li><a href="platforms.html">Platforms</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <input type="text" placeholder="Search..." class="search-bar">
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h2>Reviews Portal</h2>
+    <p>Honest opinions from our community and staff on the latest games, movies, and tech</p>
+  </section>
+
+  <div class="filters">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Games</button>
+    <button class="filter-btn">Movies</button>
+    <button class="filter-btn">TV Shows</button>
+    <button class="filter-btn">Hardware</button>
+  </div>
+
+  <main class="content">
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Game Review">
+      <h3>Stellar Odyssey 2025</h3>
+      <p>This open-world space adventure delivers breathtaking visuals and innovative gameplay mechanics.</p>
+      <div class="rating">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+      </div>
+      <div class="review-details">
+        <span>By: Cosmic Reviewer</span>
+        <span>April 15, 2025</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Movie Review">
+      <h3>Galaxy Warriors: The Final Stand</h3>
+      <p>The epic conclusion to the sci-fi saga brings emotional depth and stunning action sequences.</p>
+      <div class="rating">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <div class="review-details">
+        <span>By: Cinematic Explorer</span>
+        <span>April 10, 2025</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="TV Show Review">
+      <h3>Nebula Chronicles: Season 3</h3>
+      <p>The latest season takes the story to unexpected places while maintaining its core themes.</p>
+      <div class="rating">
+        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+      </div>
+      <div class="review-details">
+        <span>By: Series Sage</span>
+        <span>April 5, 2025</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Hardware Review">
+      <h3>QuantumVR Headset X2</h3>
+      <p>This next-gen VR headset pushes the boundaries of immersion with revolutionary features.</p>
+      <div class="rating">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <div class="review-details">
+        <span>By: Tech Voyager</span>
+        <span>April 12, 2025</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="../starfield.js"></script>
+  
+  <footer style="text-align: center; padding: 40px 20px; color: #999; font-size: 0.9rem;">
+    <p style="text-shadow: 0 0 10px #00ffff;">&copy; 2025 The Multiverse Hub. All rights reserved.</p>
+  </footer>
+</body>
+</html>
