@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gaming Platforms | The Multiverse Hub</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* Platform-specific styles */
+    .platforms-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 0;
+    }
+    
+    .platform-category {
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid #00aaff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+      width: 100%;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    }
+    
+    .platform-category h2 {
+      color: #00ffff;
+      border-bottom: 1px solid #00aaff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 5px #00ffff;
+    }
+    
+    .platform-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .platform-card {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px;
+      flex: 1 1 300px;
+      transition: all 0.3s ease;
+    }
+    
+    .platform-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+      border-color: #00ffff;
+    }
+    
+    .platform-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .platform-card h3 {
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    
+    .platform-specs {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+    
+    .platform-card p {
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+    
+    .platform-btn {
+      display: inline-block;
+      background: linear-gradient(45deg, #0066cc, #00aaff);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .platform-btn:hover {
+      background: linear-gradient(45deg, #00aaff, #00ffff);
+      transform: scale(1.05);
+    }
+    
+    /* Platform brand colors */
+    .xbox-category h2 {
+      color: #107C10;
+      text-shadow: 0 0 5px #107C10;
+    }
+    
+    .playstation-category h2 {
+      color: #006FCD;
+      text-shadow: 0 0 5px #006FCD;
+    }
+    
+    .nintendo-category h2 {
+      color: #E60012;
+      text-shadow: 0 0 5px #E60012;
+    }
+    
+    .pc-category h2 {
+      color: #00AEFF;
+      text-shadow: 0 0 5px #00AEFF;
+    }
+    
+    .retro-category h2 {
+      color: #FF6B00;
+      text-shadow: 0 0 5px #FF6B00;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .platform-card {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header><h1>The Multiverse Hub</h1></header>
+
+  <!-- Both backgrounds -->
+  <canvas id="starfield"></canvas>
+
+  <nav class="navbar">
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="movies-tv.html">Movies & TV</a></li>
+        <li><a href="platforms.html" class="active">Platforms</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="">Contact</a></li>
+      </ul>
+      <input type="text" placeholder="Search..." class="search-bar">
+    </div>
+    <button id="starModeToggle" class="toggle-btn">Switch Starfield Mode</button>
+  </nav>
+
+  <section class="hero">
+    <h2>Gaming Platforms</h2>
+    <p>Explore the hardware that powers your favorite virtual worlds</p>
+  </section>
+
+  <main class="content">
+    <!-- Xbox Section -->
+    <section class="platform-category xbox-category">
+      <h2>Xbox Consoles</h2>
+      <div class="platform-list">
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Xbox+Series+X" alt="Xbox Series X">
+          <h3>Xbox Series X</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2020<br>
+            <strong>CPU:</strong> Custom AMD Zen 2, 8 cores<br>
+            <strong>GPU:</strong> Custom RDNA 2, 12 TFLOPS<br>
+            <strong>Storage:</strong> 1TB Custom NVMe SSD
+          </div>
+          <p>Microsoft's most powerful console delivers true 4K gaming at up to 120 FPS, with ray tracing and near-instant load times thanks to its custom SSD architecture.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Xbox+Series+S" alt="Xbox Series S">
+          <h3>Xbox Series S</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2020<br>
+            <strong>CPU:</strong> Custom AMD Zen 2, 8 cores<br>
+            <strong>GPU:</strong> Custom RDNA 2, 4 TFLOPS<br>
+            <strong>Storage:</strong> 512GB Custom NVMe SSD
+          </div>
+          <p>The smallest Xbox ever delivers next-gen performance in a compact, all-digital format, targeting 1440p resolution with support for up to 120 FPS.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Xbox+One+X" alt="Xbox One X">
+          <h3>Xbox One X</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2017<br>
+            <strong>CPU:</strong> Custom AMD Jaguar, 8 cores<br>
+            <strong>GPU:</strong> Custom AMD GCN, 6 TFLOPS<br>
+            <strong>Storage:</strong> 1TB HDD
+          </div>
+          <p>The Xbox One X was the most powerful console of its generation, capable of native 4K gaming with enhanced visuals for backward compatible titles.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Xbox+360" alt="Xbox 360">
+          <h3>Xbox 360</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2005<br>
+            <strong>CPU:</strong> IBM PowerPC Tri-Core<br>
+            <strong>GPU:</strong> ATI Xenos<br>
+            <strong>Storage:</strong> Various HDD options
+          </div>
+          <p>A defining console of the HD era that brought online gaming to the masses with Xbox Live, featuring landmark franchises like Halo, Gears of War, and Forza.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- PlayStation Section -->
+    <section class="platform-category playstation-category">
+      <h2>PlayStation Consoles</h2>
+      <div class="platform-list">
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=PlayStation+5" alt="PlayStation 5">
+          <h3>PlayStation 5</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2020<br>
+            <strong>CPU:</strong> Custom AMD Zen 2, 8 cores<br>
+            <strong>GPU:</strong> Custom RDNA 2, 10.28 TFLOPS<br>
+            <strong>Storage:</strong> 825GB Custom SSD
+          </div>
+          <p>Sony's next-gen powerhouse features ultra-high-speed SSD, haptic feedback controllers, 3D audio, and ray tracing capabilities for immersive gaming experiences.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=PlayStation+4+Pro" alt="PlayStation 4 Pro">
+          <h3>PlayStation 4 Pro</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2016<br>
+            <strong>CPU:</strong> AMD Jaguar 8-core<br>
+            <strong>GPU:</strong> Custom AMD Radeon, 4.2 TFLOPS<br>
+            <strong>Storage:</strong> 1TB HDD
+          </div>
+          <p>The enhanced PS4 offers 4K gaming through upscaling and improved performance for PS4 titles, with a huge library of exclusive games.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=PlayStation+3" alt="PlayStation 3">
+          <h3>PlayStation 3</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2006<br>
+            <strong>CPU:</strong> Cell Broadband Engine<br>
+            <strong>GPU:</strong> NVIDIA RSX<br>
+            <strong>Storage:</strong> Various HDD options
+          </div>
+          <p>The PS3 pioneered Blu-ray technology and free online multiplayer, featuring iconic franchises like Uncharted, God of War, and The Last of Us.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=PlayStation+2" alt="PlayStation 2">
+          <h3>PlayStation 2</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> March 2000<br>
+            <strong>CPU:</strong> Emotion Engine<br>
+            <strong>GPU:</strong> Graphics Synthesizer<br>
+            <strong>Storage:</strong> Memory cards
+          </div>
+          <p>The best-selling console of all time with over 155 million units sold, the PS2 defined gaming for a generation with its massive library of classics.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=PlayStation+1" alt="PlayStation 1">
+          <h3>PlayStation 1</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> December 1994<br>
+            <strong>CPU:</strong> MIPS R3000A<br>
+            <strong>GPU:</strong> GPU and GTE<br>
+            <strong>Storage:</strong> Memory cards
+          </div>
+          <p>Sony's revolutionary first console that pioneered 3D gaming and introduced iconic franchises like Final Fantasy VII, Metal Gear Solid, and Crash Bandicoot.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Nintendo Section -->
+    <section class="platform-category nintendo-category">
+      <h2>Nintendo Consoles</h2>
+      <div class="platform-list">
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Nintendo+Switch" alt="Nintendo Switch">
+          <h3>Nintendo Switch</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> March 2017<br>
+            <strong>CPU:</strong> NVIDIA Tegra X1<br>
+            <strong>Storage:</strong> 32GB (expandable)<br>
+            <strong>Special Feature:</strong> Hybrid console (portable/docked)
+          </div>
+          <p>Nintendo's innovative hybrid console can be played on-the-go or docked to a TV, featuring beloved franchises like Mario, Zelda, and Animal Crossing.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Nintendo+Wii+U" alt="Nintendo Wii U">
+          <h3>Nintendo Wii U</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2012<br>
+            <strong>CPU:</strong> IBM Power-based multi-core<br>
+            <strong>GPU:</strong> AMD Radeon-based<br>
+            <strong>Storage:</strong> 8GB/32GB
+          </div>
+          <p>While commercially unsuccessful, the Wii U pioneered the tablet controller concept and hosted several excellent first-party Nintendo titles.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Nintendo+Wii" alt="Nintendo Wii">
+          <h3>Nintendo Wii</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> November 2006<br>
+            <strong>CPU:</strong> IBM PowerPC "Broadway"<br>
+            <strong>GPU:</strong> ATI "Hollywood"<br>
+            <strong>Storage:</strong> 512MB internal
+          </div>
+          <p>The revolutionary motion-controlled console that brought gaming to the masses, selling over 100 million units with accessible titles like Wii Sports.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Nintendo+3DS" alt="Nintendo 3DS">
+          <h3>Nintendo 3DS</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> February 2011<br>
+            <strong>CPU:</strong> ARM11 MPCore<br>
+            <strong>GPU:</strong> DMP PICA200<br>
+            <strong>Special Feature:</strong> Glasses-free 3D display
+          </div>
+          <p>Nintendo's popular handheld featuring glasses-free 3D gaming, with an extensive library of Pokemon, Mario, and Zelda titles.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Super+Nintendo" alt="Super Nintendo">
+          <h3>Super Nintendo (SNES)</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> 1990/1991<br>
+            <strong>CPU:</strong> Ricoh 5A22<br>
+            <strong>Graphics:</strong> PPU (Picture Processing Unit)<br>
+            <strong>Audio:</strong> S-SMP
+          </div>
+          <p>Widely regarded as one of the greatest consoles ever made, the SNES hosts timeless classics like Super Mario World, The Legend of Zelda: A Link to the Past, and Chrono Trigger.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- PC Gaming Section -->
+    <section class="platform-category pc-category">
+      <h2>PC Gaming</h2>
+      <div class="platform-list">
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=High-End+Gaming+PCs" alt="High-End Gaming PCs">
+          <h3>High-End Gaming PCs</h3>
+          <div class="platform-specs">
+            <strong>CPU:</strong> Latest Intel Core i9/AMD Ryzen 9<br>
+            <strong>GPU:</strong> NVIDIA RTX 4090/AMD RX 7900 XTX<br>
+            <strong>RAM:</strong> 32GB+ DDR5<br>
+            <strong>Storage:</strong> PCIe Gen 4 NVMe SSDs
+          </div>
+          <p>No-compromise gaming machines capable of 4K gaming at high frame rates with ray tracing and all settings maxed out. The bleeding edge of gaming technology.</p>
+          <a href="#" class="platform-btn">Explore Builds</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Mid-Range+Gaming+PCs" alt="Mid-Range Gaming PCs">
+          <h3>Mid-Range Gaming PCs</h3>
+          <div class="platform-specs">
+            <strong>CPU:</strong> Intel Core i5/AMD Ryzen 5<br>
+            <strong>GPU:</strong> NVIDIA RTX 4060/AMD RX 7600<br>
+            <strong>RAM:</strong> 16GB DDR4/DDR5<br>
+            <strong>Storage:</strong> SSD + HDD combo
+          </div>
+          <p>The sweet spot for most gamers, offering excellent 1080p/1440p performance at high settings without breaking the bank.</p>
+          <a href="#" class="platform-btn">Explore Builds</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Gaming+Laptops" alt="Gaming Laptops">
+          <h3>Gaming Laptops</h3>
+          <div class="platform-specs">
+            <strong>CPU:</strong> Various Intel/AMD mobile processors<br>
+            <strong>GPU:</strong> Mobile NVIDIA/AMD GPUs<br>
+            <strong>Special Feature:</strong> Portability with gaming power
+          </div>
+          <p>Portable gaming solutions that bring desktop-class performance on the go, with high refresh rate displays and powerful cooling systems.</p>
+          <a href="#" class="platform-btn">Explore Options</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=PC+Gaming+Storefronts" alt="PC Gaming Storefronts">
+          <h3>Digital Storefronts</h3>
+          <div class="platform-specs">
+            <strong>Popular Platforms:</strong> Steam, Epic Games Store, GOG<br>
+            <strong>Features:</strong> Digital libraries, sales, community features
+          </div>
+          <p>Digital distribution platforms that have revolutionized PC gaming, offering vast libraries of games with frequent sales and community features.</p>
+          <a href="#" class="platform-btn">Learn More</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Retro & Other Platforms -->
+    <section class="platform-category retro-category">
+      <h2>Retro & Other Platforms</h2>
+      <div class="platform-list">
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Sega+Genesis/Mega+Drive" alt="Sega Genesis">
+          <h3>Sega Genesis/Mega Drive</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> 1988/1989<br>
+            <strong>CPU:</strong> Motorola 68000<br>
+            <strong>Famous For:</strong> Sonic the Hedgehog, Streets of Rage
+          </div>
+          <p>Sega's 16-bit powerhouse that challenged Nintendo's dominance, known for its "edgier" games and the iconic Sonic the Hedgehog franchise.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Atari+2600" alt="Atari 2600">
+          <h3>Atari 2600</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> 1977<br>
+            <strong>CPU:</strong> MOS 6507<br>
+            <strong>Famous For:</strong> Pioneering home gaming
+          </div>
+          <p>The system that brought arcade gaming into homes and helped establish the video game industry as we know it today.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Neo+Geo" alt="Neo Geo">
+          <h3>Neo Geo</h3>
+          <div class="platform-specs">
+            <strong>Released:</strong> 1990<br>
+            <strong>CPU:</strong> Motorola 68000<br>
+            <strong>Famous For:</strong> Arcade-perfect home gaming
+          </div>
+          <p>"The Rolls-Royce of gaming consoles" brought true arcade quality to home systems with its powerful hardware and iconic fighting games.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Handheld+Gaming" alt="Handheld Gaming">
+          <h3>Classic Handhelds</h3>
+          <div class="platform-specs">
+            <strong>Systems:</strong> Game Boy, PSP, Game Gear, Lynx<br>
+            <strong>Era:</strong> 1989-2010s
+          </div>
+          <p>Portable gaming systems that brought console-quality experiences on the go, from Nintendo's dominant Game Boy to Sony's multimedia PSP.</p>
+          <a href="#" class="platform-btn">Explore Games</a>
+        </div>
+        
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Modern+Handhelds" alt="Modern Handhelds">
+          <h3>Modern Handhelds</h3>
+          <div class="platform-specs">
+            <strong>Systems:</strong> Steam Deck, ROG Ally, Ayaneo<br>
+            <strong>Features:</strong> PC gaming on the go
+          </div>
+          <p>The latest generation of handheld gaming brings PC-level performance to portable form factors, with access to vast libraries of games.</p>
+          <a href="#" class="platform-btn">Explore Options</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Coming Soon Section -->
+    <section class="platform-category">
+      <h2>Coming Soon</h2>
+      <div class="platform-list">
+        <div class="platform-card">
+          <img src="https://via.placeholder.com/600x300?text=Next-Gen+Systems" alt="Next-Gen Systems">
+          <h3>Next-Gen Systems</h3>
+          <div class="platform-specs">
+            <strong>Anticipated:</strong> 2027-2028<br>
+            <strong>Rumored Features:</strong> Cloud integration, AI enhancements
+          </div>
+          <p>Stay tuned for the latest rumors, leaks, and official announcements about the next generation of gaming consoles and hardware.</p>
+          <a href="#" class="platform-btn">Follow Updates</a>
+        </div>
+      </div>
+    </section>
+  </main>
+<script src="../starfield.js"></script>
+  <footer style="text-align: center; padding: 40px 20px; color: #999; font-size: 0.9rem;">
+    <p style="text-shadow: 0 0 10px #00ffff;">&copy; 2025 The Multiverse Hub. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
