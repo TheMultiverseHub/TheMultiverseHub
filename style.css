@@ -1,0 +1,524 @@
+/* =================== Global Reset =================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =================== Body & Background =================== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  background: radial-gradient(ellipse at bottom, #050505 0%, #000 100%);
+}
+
+/* =================== Canvas (Starfield Background) =================== */
+canvas#starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* =================== Header =================== */
+header {
+  background: linear-gradient(90deg, #00ffcc, #00ccff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  padding: 0px 10px 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00ffcc; }
+  to { text-shadow: 0 0 20px #00ccff, 0 0 30px #00ccff; }
+}
+
+/* =================== Navbar =================== */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 25px;
+  flex-wrap: wrap;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.nav-links {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li a {
+  display: inline-block;
+  padding: 5px 10px;
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid #00ffff;
+  border-radius: 25px;
+  color: #00ffff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px #00ffff;
+  box-shadow: 0 0 5px #00ffff30, 0 0 10px #00ffff10;
+}
+
+.nav-links li a:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 10px #00ffff80, 0 0 20px #00ffff40;
+  color: #fff;
+  text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+}
+
+/* =================== Search Bar =================== */
+.search-bar {
+  padding: 8px 12px;
+  height: 35px;
+  border-radius: 20px;
+  border: 2px solid #00ffff;
+  outline: none;
+  background-color: rgba(34, 34, 34, 0.8);
+  color: #fff;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: 0 0 8px #00ffff, 0 0 15px #00ffff40;
+  transition: box-shadow 0.3s ease;
+}
+
+.search-bar:focus {
+  box-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff80;
+}
+
+/* =================== Hero Section =================== */
+.hero {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  color: #00ffff;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #ccc;
+}
+
+/* =================== Main Content Grid =================== */
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+/* =================== Cards =================== */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.card h3 {
+  margin-top: 15px;
+  color: #ff00cc;
+}
+
+.card p {
+  margin-top: 10px;
+  color: #ccc;
+}
+
+/* =================== Multiverse Portal =================== */
+.portal {
+  width: 150px;
+  height: 150px;
+  margin: 50px auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00ffff 10%, #5500ff 80%);
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #5500ff;
+  animation: pulsePortal 2s infinite;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.portal:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #00ffff, 0 0 60px #5500ff;
+}
+
+@keyframes pulsePortal {
+  0% {
+    box-shadow: 0 0 15px #00ffff, 0 0 30px #5500ff;
+  }
+  50% {
+    box-shadow: 0 0 30px #00ffff, 0 0 60px #5500ff;
+  }
+  100% {
+    box-shadow: 0 0 15px #00ffff, 0 0 30px #5500ff;
+  }
+}
+
+.portal-label {
+  text-align: center;
+  color: #fff;
+  margin-top: 15px;
+  font-size: 1rem;
+  text-shadow: 0 0 5px #00ffff;
+}
+
+ /* =================== Warp Transition Overlay =================== */
+#warpOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #00ffff, #000000);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 1s ease-in-out;
+}
+
+#warpOverlay.active {
+  opacity: 1;
+}
+
+.portal:active {
+  box-shadow: 0 0 80px #00ffff, 0 0 120px #5500ff;
+}
+
+ function openPortal() {
+  alert("Warping to another dimension...");
+  window.location.href = "https://kaliinfohub.github.io/"; // Change this to your destination page
+}
+    
+    .about-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .about-header h2 {
+      font-size: 2.5rem;
+      color: #00ffff;
+      margin-bottom: 15px;
+    }
+
+    .about-header p {
+      font-size: 1.2rem;
+      color: #ccc;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .about-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    .about-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+    }
+
+    .about-card i {
+      font-size: 3rem;
+      color: #00ffff;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .about-card h3 {
+      color: #ff00cc;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .about-card p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .team-section {
+      margin-top: 80px;
+    }
+
+    .team-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .team-header h2 {
+      font-size: 2.5rem;
+      color: #00ffff;
+      margin-bottom: 15px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .team-member {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .team-member:hover {
+      transform: translateY(-5px);
+    }
+
+    .team-member .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      background: linear-gradient(45deg, #00ffcc, #00ccff);
+      padding: 5px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+
+    .team-member img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .team-member h3 {
+      color: #ff00cc;
+      margin-bottom: 5px;
+    }
+
+    .team-member p.role {
+      color: #00ffff;
+      margin-bottom: 15px;
+    }
+
+    .team-member p.bio {
+      color: #ccc;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-links a {
+      color: #00ffff;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #ff00cc;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 1000px;
+      margin: 80px auto 0;
+      padding: 20px;
+    }
+
+    .timeline::after {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background: linear-gradient(to bottom, #00ffcc, #00ccff);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -2px;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+
+    .timeline-item {
+      padding: 10px 40px;
+      position: relative;
+      width: 50%;
+      box-sizing: border-box;
+    }
+
+    .timeline-item:nth-child(odd) {
+      left: 0;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ff00cc;
+      border-radius: 50%;
+      top: 20px;
+      box-shadow: 0 0 10px #ff00cc;
+    }
+
+    .timeline-item:nth-child(odd)::after {
+      right: -10px;
+    }
+
+    .timeline-item:nth-child(even)::after {
+      left: -10px;
+    }
+
+    .timeline-content {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    .timeline-content h3 {
+      color: #ff00cc;
+      margin-bottom: 10px;
+    }
+
+    .timeline-content .date {
+      color: #00ffff;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .timeline-content p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    @media screen and (max-width: 768px) {
+      .timeline::after {
+        left: 50px;
+      }
+
+      .timeline-item {
+        width: 100%;
+        padding-left: 100px;
+        padding-right: 20px;
+      }
+
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        left: 0;
+      }
+
+      .timeline-item:nth-child(odd)::after,
+      .timeline-item:nth-child(even)::after {
+        left: 40px;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+      font-size: 0.9rem;
+    }
+    
+    .toggle-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  justify-content: center;
+  background-color: transparent;
+  border: 2px solid #00ffff;
+  color: #00ffff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.toggle-btn:hover {
+  background-color: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 10px #00ffff;
+}
+
+/* Original styles... (unchanged) */
+
+    /* --- Canvas Toggles --- */
+    .bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: none;
+      z-index: -1;
+    }
+    .bg-canvas.active {
+      display: block;
+    }
+
+    /* --- Toggle Button --- */
+    .toggle-btn {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: transparent;
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .toggle-btn:hover {
+      background-color: rgba(0, 255, 255, 0.1);
+      box-shadow: 0 0 10px #00ffff;
+    }

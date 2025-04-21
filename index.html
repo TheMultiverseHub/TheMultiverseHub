@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Multiverse Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+  <header><h1>The Multiverse Hub</h1></header>
+
+  <!-- Both backgrounds -->
+  <canvas id="starfield"></canvas>
+
+  <nav class="navbar">
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="subpages/about.html">About</a></li>
+        <li><a href="subpages/games.html">Games</a></li>
+        <li><a href="subpages/movies-tv.html">Movies & TV</a></li>
+        <li><a href="subpages/platforms.html">Platforms</a></li>
+        <li><a href="subpages/community.html">Community</a></li>
+        <li><a href="">Contact</a></li>
+      </ul>
+      <input type="text" placeholder="Search..." class="search-bar">
+    </div>
+    <button id="starModeToggle" class="toggle-btn">Switch Starfield Mode</button>
+  </nav>
+
+  <section class="hero">
+    <h2>Welcome to The Multiverse Hub</h2>
+    <p>Your source for all things gaming, tech, and entertainment</p>
+  </section>
+
+  <main class="content">
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Game Preview">
+      <h3>Featured Game</h3>
+      <p>Check out the latest blockbuster title lighting up the galaxy.</p>
+    </section>
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Movie Preview">
+      <h3>New Movie Release</h3>
+      <p>Dive into the multiverse with this sci-fi epic adventure.</p>
+    </section>
+    <section class="card">
+      <img src="https://via.placeholder.com/600x300" alt="Community">
+      <h3>Join the Community</h3>
+      <p>Connect with fellow fans and be part of the multiverse!</p>
+    </section>
+  </main>
+
+  <!-- JavaScript for both backgrounds and toggle -->
+  <script>
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+const toggleBtn = document.getElementById('starModeToggle');
+
+let stars = [];
+let modeIndex = 0;
+const modes = ['classic', 'colorful', 'slow', 'warp']; // Available modes
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function createStars(count) {
+  stars = [];
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: (Math.random() - 0.5) * canvas.width,
+      y: (Math.random() - 0.5) * canvas.height,
+      z: Math.random() * canvas.width,
+      color: getRandomColor()
+    });
+  }
+}
+
+function getRandomColor() {
+  const colors = ['#ffffff', '#00ffff', '#ff00ff', '#ffff00', '#00ff00', '#ff0000', '#00aaff'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function drawStars() {
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  for (let star of stars) {
+    let speed, size;
+
+    switch (modes[modeIndex]) {
+      case 'slow':
+        star.z -= 0.3;
+        size = (1 - star.z / canvas.width) * 1;
+        break;
+      case 'warp':
+        star.z -= 6;
+        size = (1 - star.z / canvas.width) * 3;
+        break;
+      case 'colorful':
+        star.z -= 2;
+        size = (1 - star.z / canvas.width) * 2;
+        break;
+      default: // classic
+        star.z -= 2;
+        size = (1 - star.z / canvas.width) * 2;
+        break;
+    }
+
+    if (star.z <= 0) {
+      star.z = canvas.width;
+      star.x = (Math.random() - 0.5) * canvas.width;
+      star.y = (Math.random() - 0.5) * canvas.height;
+      star.color = getRandomColor();
+    }
+
+    let k = 128.0 / star.z;
+    let px = canvas.width / 2 + star.x * k;
+    let py = canvas.height / 2 + star.y * k;
+
+    if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+      ctx.beginPath();
+      ctx.fillStyle = (modes[modeIndex] === 'colorful') ? star.color : '#fff';
+      ctx.arc(px, py, size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+}
+
+function animate() {
+  drawStars();
+  requestAnimationFrame(animate);
+}
+
+createStars(300);
+animate();
+
+// Toggle starfield mode
+toggleBtn.addEventListener('click', () => {
+  modeIndex = (modeIndex + 1) % modes.length;
+});
+</script>
+
+  <footer style="text-align: center; padding: 40px 20px; color: #999; font-size: 0.9rem;">
+    <p style="text-shadow: 0 0 10px #00ffff;">&copy; 2025 The Multiverse Hub. All rights reserved.</p>
+  </footer>
+</body>
+</html>
